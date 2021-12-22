@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using Notlarim102.BusinessLayer;
 using Notlarim102.Entity;
+using Notlarim102.Entity.Messages;
 using Notlarim102.Entity.ValueObject;
 
 namespace Notlarim102.WebApp.Controllers
@@ -71,7 +72,11 @@ namespace Notlarim102.WebApp.Controllers
                 BusinessLayerResult<NotlarimUser> res = num.LoginUser(model);
                 if (res.Errors.Count>0)
                 {
-                    res.Errors.ForEach(s => ModelState.AddModelError("", s));
+                    if (res.Errors.Find(x=>x.Code==ErrorMessageCode.UserIsNotActive)!=null)
+                    {
+                        ViewBag.SetLink = $"https://localhost:44326/Home/UserActivate/{res.Result.ActivateGuid}";
+                    }
+                    res.Errors.ForEach(s => ModelState.AddModelError("", s.Message));
                     return View(model);
 
                 }
@@ -100,7 +105,7 @@ namespace Notlarim102.WebApp.Controllers
                 BusinessLayerResult<NotlarimUser> res = num.RegisterUser(model);
                 if (res.Errors.Count>0)
                 {
-                    res.Errors.ForEach(s => ModelState.AddModelError("", s));
+                    res.Errors.ForEach(s => ModelState.AddModelError("", s.Message));
                     return View(model);
 
                 }
@@ -151,6 +156,31 @@ namespace Notlarim102.WebApp.Controllers
         public ActionResult RegisterOk()
         {
             return View();
+        }
+
+        public ActionResult UserActivate(Guid id)
+        {
+            NotlarimUserManager num = new NotlarimUserManager();
+            BusinessLayerResult<NotlarimUser> res = num.ActivateUser(id);
+            if (res.Errors.Count>0)
+            {
+                TempData["errors"] = res.Errors;
+                return RedirectToAction("UserActivateCancel");
+            }
+            return RedirectToAction("UserActivateOk");
+        }
+        public ActionResult UserActivateOk()
+        {
+            return View();
+        }
+        public ActionResult UserActivateCancel()
+        {
+            List<ErrorMessageObject> errors = null;
+            if (TempData["errors"]!=null)
+            {
+                errors = TempData["errors"] as List<ErrorMessageObject>;
+            }
+            return View(errors);
         }
 
             

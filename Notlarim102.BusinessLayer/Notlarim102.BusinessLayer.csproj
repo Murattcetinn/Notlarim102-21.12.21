@@ -64,6 +64,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Notlarim102.Common\Notlarim102.Common.csproj">
+      <Project>{04caec1c-970a-4e7a-84fb-e0aaf889785d}</Project>
+      <Name>Notlarim102.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Notlarim102.DataAccessLayer\Notlarim102.DataAccessLayer.csproj">
       <Project>{1ac87205-2971-4df4-aa6c-67b6e0517469}</Project>
       <Name>Notlarim102.DataAccessLayer</Name>

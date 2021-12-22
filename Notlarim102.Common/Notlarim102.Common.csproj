@@ -4,12 +4,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8B766216-D4B4-412D-9838-8BD7AE28CE74}</ProjectGuid>
+    <ProjectGuid>{04CAEC1C-970A-4E7A-84FB-E0AAF889785D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Notlarim102.Entity</RootNamespace>
-    <AssemblyName>Notlarim102.Entity</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <RootNamespace>Notlarim102.Common</RootNamespace>
+    <AssemblyName>Notlarim102.Common</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
@@ -32,7 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -42,17 +42,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Category.cs" />
-    <Compile Include="Comment.cs" />
-    <Compile Include="Liked.cs" />
-    <Compile Include="Messages\ErrorMessageCode.cs" />
-    <Compile Include="Messages\ErrorMessageObject.cs" />
-    <Compile Include="MyEntityBase.cs" />
-    <Compile Include="Note.cs" />
-    <Compile Include="NotlarimUser.cs" />
+    <Compile Include="App.cs" />
+    <Compile Include="Helper\ConfigHelper.cs" />
+    <Compile Include="DefaultCommon.cs" />
+    <Compile Include="ICommon.cs" />
+    <Compile Include="Helper\MailHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ValueObject\LoginViewModel.cs" />
-    <Compile Include="ValueObject\RegisterViewModel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

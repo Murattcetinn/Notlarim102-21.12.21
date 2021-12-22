@@ -5,8 +5,10 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using Notlarim102.Common;
 using Notlarim102.DataAccessLayer;
 using Notlarim102.DataAccessLayer.Abstract;
+using Notlarim102.Entity;
 
 namespace Notlarim102.DataAccessLayer.EntityFramework
 {
@@ -35,11 +37,31 @@ namespace Notlarim102.DataAccessLayer.EntityFramework
         public int Insert(T obj)
         {
             objSet.Add(obj);
+            
+            if (obj is MyEntityBase)
+            {
+                MyEntityBase o = obj as MyEntityBase;
+                DateTime now = DateTime.Now;
+                o.CreatedOn = now;
+                o.ModifiedOn = now;
+                o.ModifiedUsername = App.Common.GetCurrentUsername();//"system";
+
+            }
+
+
+          
              return Save();
         }
 
         public int Update(T obj)
         {
+            if (obj is MyEntityBase)
+            {
+                MyEntityBase o = obj as MyEntityBase;                
+                o.ModifiedOn = DateTime.Now;
+                o.ModifiedUsername = App.Common.GetCurrentUsername();
+
+            }
             return Save();
         }
 
