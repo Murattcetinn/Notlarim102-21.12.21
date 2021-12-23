@@ -44,6 +44,7 @@ namespace Notlarim102.BusinessLayer
                     ActivateGuid = Guid.NewGuid(),
                     IsActive=false,
                     IsAdmin=false,
+                    ProfileImageFilename="User1.jfif"
                     //Kapatilanlar repositoryde otomatik eklenecek sekilde duzenlenecektir.
                     //ModifiedOn=now,
                     //CreatedOn=now,
@@ -104,6 +105,17 @@ namespace Notlarim102.BusinessLayer
             else
             {
                 res.AddError(ErrorMessageCode.ActivateIdDoesNotExist, "Ali Osman siteyi bi rahat birak.");
+            }
+            return res;
+        }
+
+        public BusinessLayerResult<NotlarimUser> GetUserById(int id)
+        {
+            BusinessLayerResult<NotlarimUser> res = new BusinessLayerResult<NotlarimUser>();
+            res.Result = ruser.Find(s => s.Id == id);
+            if (res.Result==null)
+            {
+                res.AddError(ErrorMessageCode.UserNotFound,"Kullanici bulunamadi.");
             }
             return res;
         }
