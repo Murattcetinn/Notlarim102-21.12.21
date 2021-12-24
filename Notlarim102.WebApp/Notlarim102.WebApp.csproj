@@ -113,6 +113,7 @@
     <Content Include="Content\Login-RegisterStyle.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\styles.css" />
+    <Content Include="Content\ValidationStyle.css" />
     <Content Include="Global.asax" />
     <Content Include="images\aliosman.jpg" />
     <Content Include="images\User1.jfif" />
@@ -187,6 +188,7 @@
     <Content Include="Views\Shared\Info.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Home\ShowProfile.cshtml" />
+    <Content Include="Views\Home\EditProfile.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
