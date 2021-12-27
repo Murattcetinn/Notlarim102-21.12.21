@@ -6,13 +6,13 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Notlarim102.Common;
+using Notlarim102.Core.DataAccess;
 using Notlarim102.DataAccessLayer;
-using Notlarim102.DataAccessLayer.Abstract;
 using Notlarim102.Entity;
 
 namespace Notlarim102.DataAccessLayer.EntityFramework
 {
-    public class Repository<T>:RepositoryBase,IRepository<T> where T:class
+    public class Repository<T>:RepositoryBase,IDataAccess<T> where T:class
     {
         private NotlarimContext db;
         private DbSet<T> objSet;
@@ -81,7 +81,7 @@ namespace Notlarim102.DataAccessLayer.EntityFramework
             return objSet.FirstOrDefault(eresult);
         }
 
-        public IQueryable<T> listQueryable()
+        public IQueryable<T> QList()
         {
             return objSet.AsQueryable<T>();
         }
