@@ -1,4 +1,5 @@
 ﻿@using Notlarim102.Entity
+@using Notlarim102.WebApp.Models
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -16,9 +17,9 @@
 
     @{
         NotlarimUser user = null;
-        if (Session["login"] != null)
+        if (CurrentSession.User != null)
         {
-            user = Session["login"] as NotlarimUser;  //as tan sonra sessıon a gelen verıler ile notlarımuser de olan ortak verılerı getırmesını saglar
+            user = CurrentSession.User as NotlarimUser;  //as tan sonra sessıon a gelen verıler ile notlarımuser de olan ortak verılerı getırmesını saglar
 
         }
     }

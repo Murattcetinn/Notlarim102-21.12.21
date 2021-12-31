@@ -8,6 +8,7 @@ using Notlarim102.BusinessLayer;
 using Notlarim102.Entity;
 using Notlarim102.Entity.Messages;
 using Notlarim102.Entity.ValueObject;
+using Notlarim102.WebApp.Models;
 using Notlarim102.WebApp.ViewModel;
 
 namespace Notlarim102.WebApp.Controllers
@@ -79,7 +80,8 @@ namespace Notlarim102.WebApp.Controllers
                     return View(model);
 
                 }
-                Session["login"] = res.Result;
+                //Session["login"] = res.Result;
+                CurrentSession.Set("login", res.Result);
                 return RedirectToAction("Index");
             }
             return View();
@@ -205,7 +207,7 @@ namespace Notlarim102.WebApp.Controllers
         {
             //NotlarimUser currentUser = Session["login"] as NotlarimUser;
             // if(currentUser !=null)res = num.GetUserById(currentUser.Id);
-           if(Session["login"] is NotlarimUser currentUser) res = num.GetUserById(currentUser.Id);            
+           if(CurrentSession.User is NotlarimUser currentUser) res = num.GetUserById(currentUser.Id);            
             if (res.Errors.Count > 0)
             {
                 //kullaniciya ait bir hata ekranina yonlendiriyoruz.
@@ -220,17 +222,19 @@ namespace Notlarim102.WebApp.Controllers
         }
         public ActionResult EditProfile()
         {
-            NotlarimUser currentuser = Session["login"] as NotlarimUser;
-            res = num.GetUserById(currentuser.Id);
-            if (res.Errors.Count > 0)
-            {
-                ErrorViewModel errorNotifyObj = new ErrorViewModel()
+            if (CurrentSession.User is NotlarimUser currentUser) res = num.GetUserById(currentUser.Id);
+            
+                if (res.Errors.Count > 0)
                 {
-                    Title = "Hata olustu",
-                    Items = res.Errors
-                };
-                return View("Error", errorNotifyObj);
-            }
+                    ErrorViewModel errorNotifyObj = new ErrorViewModel()
+                    {
+                        Title = "Hata olustu",
+                        Items = res.Errors
+                    };
+                    return View("Error", errorNotifyObj);
+                }
+                  
+           
             return View(res.Result);
         }
         [HttpPost]
@@ -257,7 +261,8 @@ namespace Notlarim102.WebApp.Controllers
                     };
                     return View("Error", errorNotifyObj);
                 }
-                Session["login"] = res.Result;
+                //Session["login"] = res.Result;
+                CurrentSession.Set("login", res.Result);
                 return RedirectToAction("ShowProfile");
 
             }
@@ -265,7 +270,7 @@ namespace Notlarim102.WebApp.Controllers
         }
         public ActionResult DeleteProfile()
         {
-            if (Session["login"] is NotlarimUser currentUser) res = num.DeleteProfile(currentUser.Id);
+            if (CurrentSession.User is NotlarimUser currentUser) res = num.DeleteProfile(currentUser.Id);
             if (res.Errors.Count > 0)
             {
                 ErrorViewModel errorNotifyObj = new ErrorViewModel()
@@ -275,7 +280,7 @@ namespace Notlarim102.WebApp.Controllers
                 };
                 return View("Error", errorNotifyObj);
             }
-            Session.Clear();
+            CurrentSession.Clear();
             return RedirectToAction("Index");
         }
         //[HttpPost]
@@ -286,7 +291,7 @@ namespace Notlarim102.WebApp.Controllers
 
         public ActionResult Logout()
         {
-            Session.Clear();
+            CurrentSession.Clear();
             return RedirectToAction("Index");
         }
 
